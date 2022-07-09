@@ -8,6 +8,7 @@ from game.casting.image import Image
 from game.casting.label import Label
 from game.casting.point import Point
 from game.casting.racket1 import Racket1
+from game.casting.racket2 import Racket2
 from game.casting.stats_racket1 import Stats_Racket1
 from game.casting.stats_racket2 import Stats_Racket2
 from game.casting.text import Text 
@@ -93,7 +94,8 @@ class SceneManager:
         self._add_score_racket2(cast)
         self._add_ball(cast)
         # self._add_bricks(cast)
-        self._add_racket(cast)
+        self._add_racket1(cast)
+        self._add_racket2(cast)
         self._add_dialog(cast, ENTER_TO_START)
 
         self._add_initialize_script(script)
@@ -107,7 +109,8 @@ class SceneManager:
     def _prepare_next_level(self, cast, script):
         self._add_ball(cast)
         # self._add_bricks(cast)
-        self._add_racket(cast)
+        self._add_racket1(cast)
+        self._add_racket2(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
         script.clear_actions(INPUT)
@@ -118,7 +121,8 @@ class SceneManager:
         
     def _prepare_try_again(self, cast, script):
         self._add_ball(cast)
-        self._add_racket(cast)
+        self._add_racket1(cast)
+        self._add_racket2(cast)
         self._add_dialog(cast, PREP_TO_LAUNCH)
 
         script.clear_actions(INPUT)
@@ -137,7 +141,8 @@ class SceneManager:
 
     def _prepare_game_over(self, cast, script):
         self._add_ball(cast)
-        self._add_racket(cast)
+        self._add_racket1(cast)
+        self._add_racket2(cast)
         self._add_dialog(cast, WAS_GOOD_GAME)
 
         script.clear_actions(INPUT)
@@ -244,10 +249,10 @@ class SceneManager:
         stats = Stats_Racket2()
         cast.add_actor(STATS_GROUP, stats)
 
-    def _add_racket(self, cast):
+    def _add_racket1(self, cast):
         cast.clear_actors(RACKET_GROUP)
-        x = CENTER_X - RACKET_WIDTH / 2
-        y = SCREEN_HEIGHT - RACKET_HEIGHT
+        x = 0 + HUD_MARGIN
+        y = CENTER_Y - RACKET_HEIGHT / 2
         position = Point(x, y)
         size = Point(RACKET_WIDTH, RACKET_HEIGHT)
         velocity = Point(0, 0)
@@ -256,6 +261,17 @@ class SceneManager:
         racket = Racket1(body, animation)
         cast.add_actor(RACKET_GROUP, racket)
 
+    def _add_racket2(self, cast):
+        cast.clear_actors(RACKET_GROUP2)
+        x = SCREEN_WIDTH - (HUD_MARGIN * 3)
+        y = CENTER_Y - RACKET_HEIGHT / 2
+        position = Point(x, y)
+        size = Point(RACKET_WIDTH, RACKET_HEIGHT)
+        velocity = Point(0, 0)
+        body = Body(position, size, velocity)
+        animation = Animation(RACKET_IMAGES, RACKET_RATE)
+        racket = Racket2(body, animation)
+        cast.add_actor(RACKET_GROUP2, racket)
     # ----------------------------------------------------------------------------------------------
     # scripting methods
     # ----------------------------------------------------------------------------------------------

@@ -10,22 +10,35 @@ class MoveRacketAction(Action):
 
     def execute(self, cast, script, callback):
         racket1 = cast.get_first_actor(RACKET_GROUP)
-        body = racket1.get_body()
-        velocity = body.get_velocity()
-        position = body.get_position()
+        racket2 = cast.get_first_actor(RACKET_GROUP2)
+        body1 = racket1.get_body()
+        body2 = racket2.get_body()
+        velocity1 = body1.get_velocity()
+        position1 = body1.get_position()
+        velocity2 = body2.get_velocity()
+        position2 = body2.get_position()
         # x = position.get_x()
-        y = position.get_y()
+        y1 = position1.get_y()
+        y2 = position2.get_y()
         
-        position = position.add(velocity)
+        position1 = position1.add(velocity1)
+        position2 = position2.add(velocity2)
 
         # if x < 0:
         #     position = Point(0, position.get_y())
         # elif x > (SCREEN_WIDTH - RACKET_WIDTH):
         #     position = Point(SCREEN_WIDTH - RACKET_WIDTH, position.get_y())
-        if y < 0:
-            position = Point(position.get_x(), 0)
-        elif y > (SCREEN_HEIGHT - RACKET_HEIGHT):
-             position = Point(position.get_x(), SCREEN_HEIGHT - RACKET_HEIGHT)
+        if y1 < 0:
+            position1 = Point(position1.get_x(), 0)
+        elif y1 > (SCREEN_HEIGHT - RACKET_HEIGHT):
+             position1 = Point(position1.get_x(), SCREEN_HEIGHT - RACKET_HEIGHT)
             
-        body.set_position(position)
+        body1.set_position(position1)
+        
+        if y2 < 0:
+            position2 = Point(position2.get_x(), 0)
+        elif y2 > (SCREEN_HEIGHT - RACKET_HEIGHT):
+             position2 = Point(position2.get_x(), SCREEN_HEIGHT - RACKET_HEIGHT)
+            
+        body2.set_position(position2)
         
